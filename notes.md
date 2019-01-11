@@ -21,3 +21,14 @@ Getting error handling working up front is going to be super useful - probably v
 - Define custom exception type
 - Check for error response and raise
 - Wrap switch in main w/ begin/rescue
+
+## Endpoints
+
+- `chat.postMessage` works for both channels and users
+  - https://api.slack.com/methods/chat.postMessage
+- `users.list` https://api.slack.com/methods/users.list
+- `channels.list` https://api.slack.com/methods/channels.list
+
+## Gems
+
+Table Print (https://github.com/arches/table_print) is a beautiful tool for printing tables of, say, Slack users
