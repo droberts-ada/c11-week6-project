@@ -1,6 +1,6 @@
 require 'table_print'
 
-# require_relative 'channel'
+require_relative 'channel'
 require_relative 'user'
 
 class Main
@@ -8,24 +8,35 @@ class Main
     puts "Initializing..."
 
     @users = User.list
-    @channels = []
+    @channels = Channel.list
     @selected = nil
 
     puts "Loaded info on #{@users.length} users and #{@channels.length} channels"
+  end
+
+  def select_channel
+    puts "Which channel would you like to select? Can be by name or slack_id."
+    input = gets.chomp
+
+    select_target(input, @channels)
   end
 
   def select_user
     puts "Who would you like to select? Can be by name or slack_id."
     input = gets.chomp
 
-    user = @users.find do |user|
-      user.name == input || user.slack_id == input
+    select_target(input, @users)
+  end
+
+  def select_target(input, targets)
+    target = targets.find do |target|
+      target.name == input || target.slack_id == input
     end
 
-    if user
-      @selected = user
+    if target
+      @selected = target
     else
-      puts "No matching user found."
+      puts "No matches found."
     end
   end
 
@@ -47,7 +58,7 @@ class Main
     puts "I will accept messages until you type 'quit'"
 
     while true
-      print "message to #{@selected.name}"
+      print "message to #{@selected.name}> "
       message = gets.chomp
       if message == 'quit'
         break
@@ -68,11 +79,10 @@ class Main
           puts "Thanks for using the slackbot"
           break
         when 'list channels'
-          puts "OK, listing channels"
-          # Class method, get list of all channels
+          tp @channels, :name, :topic, :member_count
 
         when 'select channel'
-          # Create new instance of channel and save in state
+          select_channel
 
         when 'list users'
           tp @users, :real_name, :name, :slack_id

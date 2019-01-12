@@ -7,10 +7,11 @@ class Conversation
   class SlackApiError < StandardError; end
   URL_BASE = 'https://slack.com/api/'
 
-  attr_reader :slack_id
+  attr_reader :slack_id, :name
 
-  def initialize(slack_id)
+  def initialize(slack_id, name)
     @slack_id = slack_id
+    @name = name
   end
 
   def send_message(message)
@@ -21,18 +22,10 @@ class Conversation
       text: message 
     }
 
-    HTTParty.post(url, query: params)
+    response = HTTParty.post(url, query: params)
 
     unless response['ok']
       raise SlackApiError, response['error']
-    end
-  end
-  
-  def self.list
-    response = get(list_endpoint)
-    
-    return response["members"].map do |m|
-      from_api_response(m)
     end
   end
   
@@ -46,16 +39,12 @@ class Conversation
     
     return response
   end
-
-  def self.list_endpoint
-    raise NotImplementedError, "TODO: implement me in a child class"
-  end
   
   def self.from_api_response(response)
     raise NotImplementedError, "TODO: implement me in a child class"
   end
 
-  def self.details
+  def details
     raise NotImplementedError, "TODO: implement me in a child class"
   end
 end
