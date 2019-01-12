@@ -32,3 +32,30 @@ Getting error handling working up front is going to be super useful - probably v
 ## Gems
 
 Table Print (https://github.com/arches/table_print) is a beautiful tool for printing tables of, say, Slack users
+
+## Open Questions
+
+- Debugging tools, particularly visual tool for network activity
+- Testing? VCR / mocking?
+- How to introduce / order / structure
+  - Query vs command
+  - Request/response
+- Command line options, configuration, ...
+
+## Topics
+
+- What is an API?
+  - Show in browser - get JSON
+    - Install browser extension
+    - Show network tab?
+  - POSTman?
+  - Reading docs
+  - Requests and responses
+  - Commands vs queries, safety & idempotency, REST (?)
+- Consuming an API
+  - HTTParty, the response object
+  - Query parameters
+  - POSTing data
+- Authentication / tokens
+  - .gitignore, .env
+
